@@ -97,7 +97,7 @@ el('runBtn').onclick = async () => {
   el('runBtn').disabled = true;
   try{
     const res = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transcript }) });
-    if(!res.ok){ throw new Error('Server error'); }
+    if(!res.ok){ const t = await res.text(); throw new Error(t || 'Server error'); }
     const data = await res.json();
     el('report').style.display = 'block';
     el('jsonWrap').style.display = 'block';
@@ -112,7 +112,7 @@ el('runBtn').onclick = async () => {
     };
   }catch(err){
     console.error(err);
-    alert('Something went wrong. Check your API key on the server.');
+    alert(err.message);
   }finally{
     el('runBtn').disabled = false;
     el('status').textContent = '';
