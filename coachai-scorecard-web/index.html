@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CoachAI Scorecard</title>
+  <style>
+    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;line-height:1.5;margin:0;background:#0b0d10;color:#e6e9ef}
+    .wrap{max-width:900px;margin:0 auto;padding:24px}
+    .card{background:#11141a;border:1px solid #232733;border-radius:16px;padding:20px;box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+    textarea{width:100%;min-height:220px;border-radius:12px;border:1px solid #2a2f3a;background:#0f1217;color:#e6e9ef;padding:12px}
+    button{border:none;background:#6ea8fe;color:#0b0d10;padding:12px 16px;border-radius:12px;font-weight:600;cursor:pointer}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .muted{color:#98a2b3}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0f1217;border:1px solid #2a2f3a;border-radius:12px;padding:12px}
+    .h1{font-size:22px;font-weight:800;margin:0 0 8px}
+    .h2{font-size:18px;font-weight:700;margin:16px 0 8px}
+    .bar{display:inline-block;margin-left:8px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" style="margin-bottom:12px">
+      <div class="h1">CoachAI Scorecard</div>
+      <div class="muted">Paste a transcript labeled <span class="mono">Coach:</span> / <span class="mono">Client:</span> lines. English or Spanish.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <textarea id="txt" placeholder="Coach: Quick reminder—this is confidential and you control what we cover today.
+Client: Thank you. I’m debating whether to apply for a team lead role.
+Coach: What outcome would be most useful from our time today?...
+"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button id="runBtn">Analyze Transcript</button>
+        <span id="status" class="muted"></span>
+      </div>
+    </div>
+
+    <div id="report" class="card" style="display:none;margin-bottom:12px"></div>
+
+    <div id="jsonWrap" class="card" style="display:none">
+      <div class="row" style="justify-content:space-between">
+        <div class="h2">Raw JSON</div>
+        <button id="dl">Download JSON</button>
+      </div>
+      <pre id="json" class="mono"></pre>
+    </div>
+  </div>
+
+<script>
+const el = (id) => document.getElementById(id);
+const starBar = (n) => {
+  const filled = '▰'.repeat(n);
+  const empty = '▱'.repeat(5-n);
+  return `<span class="bar mono">${filled}${empty}</span>`;
+};
+
+function scorecardHTML(r){
+  const c = r.competencies;
+  const row = (name,key) => `<div>${name}: ${starBar(c[key].score_1_5)} <span class="muted">(${c[key].score_1_5})</span></div>`;
+
+  return `
+  <div class="h2">Scorecard</div>
+  <div class="grid">
+    <div>
+      <div><strong>Overall:</strong> ${r.overall_score_0_100}/100 · <strong>Confidence:</strong> ${r.overall_confidence}</div>
+      <div class="muted" style="margin-top:6px">Talk profile: ${r.metrics.est_coach_talk_ratio} coach talk · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>
+      <div class="h2">Competencies (5★)</div>
+      ${row('Ethics','ethics')}
+      ${row('Mindset','mindset')}
+      ${row('Agreements','agreements')}
+      ${row('Trust & Safety','trust_safety')}
+      ${row('Presence','presence')}
+      ${row('Active Listening','active_listening')}
+      ${row('Evokes Awareness','evokes_awareness')}
+      ${row('Facilitates Growth','facilitates_growth')}
+    </div>
+    <div>
+      <div class="h2">Top strengths</div>
+      <ul><li>${r.strengths_summary}</li></ul>
+      <div class="h2">Growth edges</div>
+      <ul><li>${r.growth_areas_summary}</li></ul>
+      <div class="h2">Action items</div>
+      <ul>${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+}
+
+el('runBtn').onclick = async () => {
+  const transcript = el('txt').value.trim();
+  if(!transcript){ alert('Paste a transcript first.'); return; }
+  el('status').textContent = 'Analyzing…';
+  el('runBtn').disabled = true;
+  try{
+    const res = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transcript }) });
+    if(!res.ok){ throw new Error('Server error'); }
+    const data = await res.json();
+    el('report').style.display = 'block';
+    el('jsonWrap').style.display = 'block';
+    el('report').innerHTML = scorecardHTML(data);
+    el('json').textContent = JSON.stringify(data, null, 2);
+    el('dl').onclick = () => {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'coachai-scorecard.json'; a.click();
+      URL.revokeObjectURL(url);
+    };
+  }catch(err){
+    console.error(err);
+    alert('Something went wrong. Check your API key on the server.');
+  }finally{
+    el('runBtn').disabled = false;
+    el('status').textContent = '';
+  }
+};
+</script>
+</body>
+</html>
