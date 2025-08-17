@@ -47,14 +47,15 @@ export default async function handler(req, res) {
   "flags": {"ethical_concerns":string[],"confidentiality_risks":string[],"notes":string[]},
   "disclaimer": string
 }
-Rules (brief):
-- Evidence must be unique COACH quotes (≤12 words).
-- Map: confidentiality→ethics; autonomy/validation→trust_safety; reflections→active_listening;
-  assumptions/options→evokes_awareness; action/timeline/obstacles/supports→facilitates_growth;
-  presence requires non-question partnering; agreements needs outcome (+ success measure/revisit for ≥4).
-- Mindset ≤3 unless explicit self-management/learning is quoted. Presence ≤3 unless partnering is quoted.
-- FG=5 only if action + obstacles + supports present.
-- overall_score_0_100 = round((sum of eight scores)/40*100).`;
+Rules:
+- Evidence must be unique COACH quotes (≤12 words), not client lines.
+- Route autonomy/validation to trust_safety; confidentiality to ethics; reflections to active_listening; questions on assumptions/options to evokes_awareness; actions/timeline/obstacles/supports to facilitates_growth; presence uses non-question partnering only; agreements requires outcome (+ success measure/revisit for ≥4).
+- Mindset ≤3 unless explicit self-management/learning is quoted. Presence ≤3 unless non-question partnering is quoted. FG=5 requires action + obstacles + supports.
+- Metrics are strings. If coach_utterances < 10 set overall_confidence="Low"; otherwise use metrics.confidence.
+- Set overall_score_0_100 = round( (sum of the eight 1–5 scores) / 40 * 100 ).
+LANGUAGE:
+- Return ALL natural-language fields in SPANISH (strengths_summary, growth_areas_summary, action_items[].*, metrics phrasing, disclaimer).
+- Keep JSON KEYS and the enum values for "overall_confidence" and metrics.confidence in English ("Low"|"Medium"|"High").`;
 
     const body = {
       model: "gpt-4o-mini",
