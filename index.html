@@ -95,6 +95,34 @@ a{ color:var(--brand); }
 
 /* later in the file */
 button{ background:var(--accent); color:var(--ink); }
+    /* === Token-driven overrides (last wins) === */
+:root{
+  /* add this if you don’t already have it */
+  --input-bg:#0F1217;
+}
+
+body{
+  background:var(--ink) !important;
+  color:var(--text) !important;
+  font-family:var(--font-ui) !important;
+}
+.h1,.h2{ font-family:var(--font-head) !important; }
+
+.card{ background:var(--card) !important; border-color:var(--border) !important; }
+.muted{ color:var(--muted) !important; }
+
+textarea, pre{
+  background:var(--input-bg) !important;
+  border-color:var(--border) !important;
+  color:var(--text) !important;
+}
+
+button{
+  background:var(--accent) !important;
+  color:#fff !important;
+}
+
+a{ color:var(--brand) !important; }
   </style>
 </head>
 <body>
