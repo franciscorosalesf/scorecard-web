@@ -123,6 +123,25 @@ button{
 }
 
 a{ color:var(--brand) !important; }
+    /* === final overrides: last wins === */
+:root{
+  --ink:#10131A;       /* try a clearly different bg */
+  --text:#F2F5F9;
+  --card:#151A22;
+  --border:#2B3240;
+  --muted:#A9B4C5;
+  --accent:#E0812C;
+  --brand:#1B3A6F;
+}
+
+/* make sure these win */
+html, body { background: var(--ink) !important; color: var(--text) !important; }
+.h1, .h2 { font-family: 'Poppins','Manrope',system-ui,sans-serif !important; }
+.card { background: var(--card) !important; border-color: var(--border) !important; }
+.muted { color: var(--muted) !important; }
+textarea, pre { background:#0F1217 !important; border-color: var(--border) !important; color: var(--text) !important; }
+button { background: var(--accent) !important; color: #0B0D10 !important; }
+a { color: var(--brand) !important; }
   </style>
 </head>
 <body>
