@@ -121,6 +121,36 @@
   textarea{ background:var(--input)!important; border-color:var(--border)!important; color:var(--text)!important; }
   .muted{ color:var(--muted)!important; }
   button{ background:var(--accent)!important; color:#071017!important; }
+  /* ===== Dara theme override (paste just before </style>) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
+
+:root{
+  --ink:#0B0D10;          /* deep ink */
+  --text:#E6E9EF;         /* light text */
+  --muted:#9AA3B2;        /* muted text */
+  --card:#11141a;         /* card bg */
+  --border:#232733;       /* borders */
+  --brand:#1B3A6F;        /* Dara blue */
+  --accent:#C05A34;       /* Dara rust */
+  --sand:#F0EAE2;         /* light sand */
+}
+
+/* fonts */
+body{ font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+.h1,.h2{ font-family:'Poppins','Manrope',system-ui,sans-serif; letter-spacing:.2px }
+
+/* colors */
+body{ background:var(--ink); color:var(--text); }
+.card{ background:var(--card); border:1px solid var(--border); }
+textarea{ background:#0f1217; color:var(--text); border:1px solid var(--border); }
+.muted{ color:var(--muted); }
+
+/* buttons */
+button{ background:var(--accent); color:#fff; }
+button:hover{ filter:brightness(1.06); }
+
+/* links (if any) */
+a{ color:var(--brand); }
 </style>
 </head>
 <body>
