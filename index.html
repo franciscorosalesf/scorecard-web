@@ -6,142 +6,91 @@
   <title>Dara Coaching Score</title>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
+  /* Google fonts (swap if your brand uses others) */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
 
+/* ===== Brand tokens — change ONLY these to restyle ===== */
 :root{
-  --ink:#EEF6F3;          /* page bg */
-  --text:#203742;         /* main text */
-  --muted:#9AA3B2;        /* muted text */
-  --card:#11141A;         /* card bg */
-  --border:#232733;       /* card borders */
+  --ink:#0B0D10;          /* page background */
+  --text:#E6E9EF;         /* main text */
+  --muted:#9AA3B2;        /* secondary text */
+  --card:#11141A;         /* card background */
+  --border:#232733;       /* borders */
+  --input-bg:#0F1217;     /* textarea & code bg */
 
-  --brand:#1B3A6F;        /* Dara blue (headings, accents if you like) */
-  --accent:#39B75D;       /* Dara orange (button) */
-  --sand:#F0EAE2;         /* optional light sand */
+  --brand:#1B3A6F;        /* link / accent */
+  --accent:#E0812C;       /* button */
   --font-ui:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --font-head:'Poppins','Manrope',system-ui,sans-serif;
 }
-body{ font-family:var(--font-ui); background:var(--ink); color:var(--text); letter-spacing:.2px }
-.h1,.h2{ font-family:var(--font-head); }
-button{ background:var(--accent); color:#fff; }
-button:hover{ filter:brightness(1.06); }
-a{ color:var(--brand); }
-    /* fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
 
-    /* brand tokens */
-    :root{
-      --ink:#0B0D10;              /* deep bg */
-      --text:#E6E9EF;             /* main text */
-      --muted:#9AA3B2;            /* muted text */
-      --card:#11141A;             /* card bg */
-      --border:#232733;           /* borders */
-      --brand:#1B3A6F;            /* Dara blue */
-      --accent:#C05A34;           /* Dara rust */
-      --sand:#F0EAE2;             /* light sand */
-    }
-
-    /* base */
-    body{
-      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.5; margin:0;
-      background:var(--ink); color:var(--text);
-    }
-    .wrap{max-width:940px;margin:0 auto;padding:24px}
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px; padding:20px;
-      box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
-    }
-    textarea{
-      width:100%; min-height:220px;
-      border-radius:12px; border:1px solid var(--border);
-      background:#0f1217; color:var(--text); padding:12px;
-    }
-    button{
-      border:none; background:var(--accent); color:#fff;
-      padding:12px 16px; border-radius:12px;
-      font-weight:700; cursor:pointer;
-    }
-    button:hover{ filter:brightness(1.06) }
-    button:disabled{ opacity:.5; cursor:not-allowed }
-    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .muted{color:var(--muted)}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-    pre{
-      white-space:pre-wrap; word-break:break-word;
-      background:#0f1217; border:1px solid var(--border);
-      border-radius:12px; padding:12px;
-    }
-    .h1{
-      font-family:Poppins,Manrope,system-ui,sans-serif;
-      font-size:28px; font-weight:800; margin:0 0 8px; letter-spacing:.2px;
-    }
-    .h2{
-      font-family:Poppins,Manrope,system-ui,sans-serif;
-      font-size:18px; font-weight:700; margin:16px 0 8px;
-    }
-    .bar{display:inline-block;margin-left:8px}
-    .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin-right:6px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:760px){.grid{grid-template-columns:1fr}}
-    a{ color:var(--brand) }
-    :root{
-  --accent:#39B75D;   /* Dara orange */
-  --ink:#0B0D10;      /* page bg */
-  --text:#E6E9EF;     /* text */
-}
-
-/* later in the file */
-button{ background:var(--accent); color:var(--ink); }
-    /* === Token-driven overrides (last wins) === */
-:root{
-  /* add this if you don’t already have it */
-  --input-bg:#0F1217;
-}
-
+/* ===== Base ===== */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
 body{
-  background:var(--ink) !important;
-  color:var(--text) !important;
-  font-family:var(--font-ui) !important;
+  font-family:var(--font-ui);
+  color:var(--text);
+  background:var(--ink);
+  line-height:1.5;
+  letter-spacing:.2px;
 }
-.h1,.h2{ font-family:var(--font-head) !important; }
+a{ color:var(--brand); text-decoration:none }
+a:hover{ text-decoration:underline }
 
-.card{ background:var(--card) !important; border-color:var(--border) !important; }
-.muted{ color:var(--muted) !important; }
+.wrap{ max-width:940px; margin:0 auto; padding:24px }
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
+}
+.row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
 
-textarea, pre{
-  background:var(--input-bg) !important;
-  border-color:var(--border) !important;
-  color:var(--text) !important;
+.h1{
+  font-family:var(--font-head);
+  font-size:28px; font-weight:800; margin:0 0 8px;
+  letter-spacing:.2px;
+}
+.h2{
+  font-family:var(--font-head);
+  font-size:20px; font-weight:700; margin:16px 0 8px;
+}
+
+.muted{ color:var(--muted) }
+.mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace }
+
+textarea{
+  width:100%; min-height:260px;
+  border-radius:12px; padding:12px;
+  border:1px solid var(--border);
+  background:var(--input-bg);
+  color:var(--text);
+}
+textarea:focus{ outline:2px solid var(--brand); outline-offset:2px }
+
+pre{
+  white-space:pre-wrap; word-break:break-word;
+  background:var(--input-bg);
+  border:1px solid var(--border);
+  border-radius:12px; padding:12px;
 }
 
 button{
-  background:var(--accent) !important;
-  color:#fff !important;
+  border:none; cursor:pointer;
+  padding:12px 16px; border-radius:12px;
+  font-weight:700;
+  background:var(--accent);
+  color:#0B0D10; /* choose #fff if you prefer */
 }
+button:hover{ filter:brightness(1.06) }
+button:disabled{ opacity:.5; cursor:not-allowed }
 
-a{ color:var(--brand) !important; }
-    /* === final overrides: last wins === */
-:root{
-  --ink:#10131A;       /* try a clearly different bg */
-  --text:#F2F5F9;
-  --card:#151A22;
-  --border:#2B3240;
-  --muted:#A9B4C5;
-  --accent:#E0812C;
-  --brand:#1B3A6F;
-}
+.bar{ display:inline-block; margin-left:8px }
+.pill{ display:inline-block; border:1px solid var(--border); border-radius:999px; padding:4px 10px; margin-right:6px }
 
-/* make sure these win */
-html, body { background: var(--ink) !important; color: var(--text) !important; }
-.h1, .h2 { font-family: 'Poppins','Manrope',system-ui,sans-serif !important; }
-.card { background: var(--card) !important; border-color: var(--border) !important; }
-.muted { color: var(--muted) !important; }
-textarea, pre { background:#0F1217 !important; border-color: var(--border) !important; color: var(--text) !important; }
-button { background: var(--accent) !important; color: #0B0D10 !important; }
-a { color: var(--brand) !important; }
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
+@media (max-width:760px){ .grid{ grid-template-columns:1fr } }
   </style>
 </head>
 <body>
