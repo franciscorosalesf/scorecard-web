@@ -4,154 +4,70 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dara Coaching Score</title>
+
   <style>
-  /* === Brand tokens (swap these to your palette/fonts) === */
-  :root{
-    --font-heading: "Your Heading Font", Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    --font-body: "Your Body Font", Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    /* fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
 
-    /* Colors */
-    --bg: #EEF6F3;          /* page background */
-    --card: #F4F4F4;        /* cards */
-    --border: #232733;      /* borders */
-    --text: #203742;        /* main text */
-    --muted: #98A2B3;       /* secondary text */
-    --accent: #39B75D;      /* primary brand color for buttons */
-    --accent-contrast: #0B0D10; /* button text color */
-    --input-bg: #0F1217;    /* textarea/input bg */
-  }
+    /* brand tokens */
+    :root{
+      --ink:#0B0D10;              /* deep bg */
+      --text:#E6E9EF;             /* main text */
+      --muted:#9AA3B2;            /* muted text */
+      --card:#11141A;             /* card bg */
+      --border:#232733;           /* borders */
+      --brand:#1B3A6F;            /* Dara blue */
+      --accent:#C05A34;           /* Dara rust */
+      --sand:#F0EAE2;             /* light sand */
+    }
 
-  /* === Page === */
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    font-family:var(--font-body);
-    line-height:1.5; margin:0;
-    background:var(--bg); color:var(--text);
-  }
-  .wrap{max-width:900px;margin:0 auto;padding:24px}
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:20px;
-    box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
-  }
-  .muted{color:var(--muted)}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-
-  /* === Typography === */
-  .h1{
-    font-family:var(--font-heading);
-    font-size:22px; font-weight:800; margin:0 0 8px;
-    letter-spacing:.2px;
-  }
-  .h2{
-    font-family:var(--font-heading);
-    font-size:18px; font-weight:700; margin:16px 0 8px;
-  }
-
-  /* === Inputs / Buttons === */
-  textarea{
-    width:100%; min-height:220px; resize:vertical;
-    border-radius:12px; border:1px solid var(--border);
-    background:var(--input-bg); color:var(--text); padding:12px;
-  }
-  input[type="email"]{
-    border-radius:10px; border:1px solid var(--border);
-    background:var(--input-bg); color:var(--text);
-    padding:10px; width:100%;
-  }
-  button{
-    border:none; background:var(--accent); color:var(--accent-contrast);
-    padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer;
-    transition:transform .02s ease, opacity .2s ease;
-  }
-  button:active{ transform:translateY(1px) }
-  button:disabled{opacity:.5;cursor:not-allowed}
-
-  /* === Layout helpers === */
-  .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
-  .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-  @media (max-width:760px){ .grid{ grid-template-columns:1fr } }
-  pre{
-    white-space:pre-wrap; word-break:break-word;
-    background:var(--input-bg); border:1px solid var(--border);
-    border-radius:12px; padding:12px;
-  }
-  .bar{display:inline-block;margin-left:8px}
-  .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin-right:6px}
-</style>
-  <!-- Brand override (put this AFTER your main <style>) -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    /* Fonts — change to your real brand families when ready */
-    --font-heading: "Montserrat", Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-
-    /* Colors — TEMP DEMO so you see a visible change */
-    --bg:#0A0C10;
-    --card:#0F1218;
-    --border:#243042;
-    --text:#F2F5F9;
-    --muted:#A9B4C5;
-    --accent:#22D3EE;            /* primary brand color (buttons, highlights) */
-    --accent-contrast:#071017;   /* button text color */
-    --input-bg:#0C1016;
-  }
-</style>
-  <!-- Brand overrides -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style id="brand-override">
-  :root{
-    /* swap these for your real brand tokens when ready */
-    --bg:#0A0C10;
-    --card:#0F1218;
-    --border:#243042;
-    --text:#F2F5F9;
-    --muted:#A9B4C5;
-    --accent:#22D3EE;      /* primary brand color */
-    --input:#0C1016;
-  }
-  body{ font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important;
-        background:var(--bg)!important; color:var(--text)!important; }
-  .h1,.h2{ font-family:"Montserrat","Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important; }
-  .card{ background:var(--card)!important; border-color:var(--border)!important; }
-  textarea{ background:var(--input)!important; border-color:var(--border)!important; color:var(--text)!important; }
-  .muted{ color:var(--muted)!important; }
-  button{ background:var(--accent)!important; color:#071017!important; }
-  /* ===== Dara theme override (paste just before </style>) ===== */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
-
-:root{
-  --ink:#0B0D10;          /* deep ink */
-  --text:#E6E9EF;         /* light text */
-  --muted:#9AA3B2;        /* muted text */
-  --card:#11141a;         /* card bg */
-  --border:#232733;       /* borders */
-  --brand:#1B3A6F;        /* Dara blue */
-  --accent:#C05A34;       /* Dara rust */
-  --sand:#F0EAE2;         /* light sand */
-}
-
-/* fonts */
-body{ font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
-.h1,.h2{ font-family:'Poppins','Manrope',system-ui,sans-serif; letter-spacing:.2px }
-
-/* colors */
-body{ background:var(--ink); color:var(--text); }
-.card{ background:var(--card); border:1px solid var(--border); }
-textarea{ background:#0f1217; color:var(--text); border:1px solid var(--border); }
-.muted{ color:var(--muted); }
-
-/* buttons */
-button{ background:var(--accent); color:#fff; }
-button:hover{ filter:brightness(1.06); }
-
-/* links (if any) */
-a{ color:var(--brand); }
-</style>
+    /* base */
+    body{
+      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.5; margin:0;
+      background:var(--ink); color:var(--text);
+    }
+    .wrap{max-width:940px;margin:0 auto;padding:24px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px; padding:20px;
+      box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
+    }
+    textarea{
+      width:100%; min-height:220px;
+      border-radius:12px; border:1px solid var(--border);
+      background:#0f1217; color:var(--text); padding:12px;
+    }
+    button{
+      border:none; background:var(--accent); color:#fff;
+      padding:12px 16px; border-radius:12px;
+      font-weight:700; cursor:pointer;
+    }
+    button:hover{ filter:brightness(1.06) }
+    button:disabled{ opacity:.5; cursor:not-allowed }
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    pre{
+      white-space:pre-wrap; word-break:break-word;
+      background:#0f1217; border:1px solid var(--border);
+      border-radius:12px; padding:12px;
+    }
+    .h1{
+      font-family:Poppins,Manrope,system-ui,sans-serif;
+      font-size:28px; font-weight:800; margin:0 0 8px; letter-spacing:.2px;
+    }
+    .h2{
+      font-family:Poppins,Manrope,system-ui,sans-serif;
+      font-size:18px; font-weight:700; margin:16px 0 8px;
+    }
+    .bar{display:inline-block;margin-left:8px}
+    .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin-right:6px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+    a{ color:var(--brand) }
+  </style>
 </head>
 <body>
   <div class="wrap">
