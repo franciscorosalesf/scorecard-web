@@ -1,136 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CoachAI Scorecard</title>
+  <title>Dara Coaching Score</title>
   <style>
-    /* =======================
-     DARA BRAND THEME
-     Fonts: Space Grotesk (headings), Inter (body)
-     Colors: Emerald accent, Mint Cream surfaces, Gunmetal text
-     ======================= */
-  :root{
-    /* Fonts */
-    --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    --font-heading: 'Space Grotesk', var(--font-body);
-
-    /* Colors (from brand guide) */
-    --bg: #EEF6F3;           /* Mint Cream */
-    --card: #FFFFFF;         /* White */
-    --text: #203742;         /* Gunmetal (text & headings) */
-    --muted: #5f7882;        /* softer Gunmetal for secondary text */
-    --accent: #39B75D;       /* Emerald (CTA/buttons) */
-    --accent-contrast: #FFFFFF;
-
-    /* Extras */
-    --radius: 16px;
-    --radius-sm: 12px;
-    --card-border: #E9F3EF;  /* Mint Cream (lighter edge) */
-    --field-bg: #E9F3EF;     /* inputs */
-    --field-border: #E9F3EF; /* subtle input border */
-  }
-
-  /* Page */
-  body{
-    font-family: var(--font-body);
-    line-height: 1.5;
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-  }
-  .wrap{ max-width: 900px; margin: 0 auto; padding: 24px; }
-
-  /* Cards & sections */
-  .card{
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
-  }
-
-  /* Headings */
-  .h1{
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 26px;
-    margin: 0 0 8px;
-    letter-spacing: .2px;
-  }
-  .h2{
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 18px;
-    margin: 16px 0 8px;
-  }
-
-  /* Text helpers */
-  .muted{ color: var(--muted); }
-  .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-
-  /* Inputs / buttons */
-  textarea{
-    width: 100%;
-    min-height: 220px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--field-border);
-    background: var(--field-bg);
-    color: var(--text);
-    padding: 12px;
-  }
-  button{
-    border: none;
-    background: var(--accent);
-    color: var(--accent-contrast);
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    cursor: pointer;
-  }
-  button:disabled{ opacity: .55; cursor: not-allowed; }
-
-  /* Layout helpers */
-  .row{ display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 760px){ .grid{ grid-template-columns: 1fr; } }
-
-  /* Raw JSON */
-  pre{
-    white-space: pre-wrap;
-    word-break: break-word;
-    background: var(--field-bg);
-    border: 1px solid var(--field-border);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    margin: 0;
-  }
-
-  /* Little star bar spacing */
-  .bar{ display:inline-block; margin-left: 8px; }
-  .pill{
-    display:inline-block;
-    border:1px solid var(--field-border);
-    border-radius:999px;
-    padding:4px 10px;
-    margin-right:6px;
-  }
+    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;line-height:1.5;margin:0;background:#0b0d10;color:#e6e9ef}
+    .wrap{max-width:900px;margin:0 auto;padding:24px}
+    .card{background:#11141a;border:1px solid #232733;border-radius:16px;padding:20px;box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+    textarea{width:100%;min-height:220px;border-radius:12px;border:1px solid #2a2f3a;background:#0f1217;color:#e6e9ef;padding:12px}
+    button{border:none;background:#6ea8fe;color:#0b0d10;padding:12px 16px;border-radius:12px;font-weight:600;cursor:pointer}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .muted{color:#98a2b3}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0f1217;border:1px solid #2a2f3a;border-radius:12px;padding:12px}
+    .h1{font-size:22px;font-weight:800;margin:0 0 8px}
+    .h2{font-size:18px;font-weight:700;margin:16px 0 8px}
+    .bar{display:inline-block;margin-left:8px}
+    .pill{display:inline-block;border:1px solid #2a2f3a;border-radius:999px;padding:4px 10px;margin-right:6px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card" style="margin-bottom:12px">
-      <div class="h1">CoachAI Scorecard</div>
-      <div class="muted">Paste a transcript labeled <span class="mono">Coach:</span> / <span class="mono">Client:</span> lines. English or Spanish.</div>
+      <div class="h1">Dara Coaching Score</div>
+      <div class="muted">Pega una transcripción con líneas <span class="mono">Coach:</span> / <span class="mono">Client:</span>. Sin audio por ahora. Español o inglés.</div>
     </div>
 
     <div class="card" style="margin-bottom:12px">
-      <textarea id="txt" placeholder="Coach: Quick reminder—this is confidential and you control what we cover today.
-Client: Thank you. I’m debating whether to apply for a team lead role.
-Coach: What outcome would be most useful from our time today?...
-"></textarea>
+      <textarea id="txt" placeholder="Coach: Recordatorio rápido—esto es confidencial y tú decides qué tratamos hoy.\nClient: Gracias. Estoy dudando si postularme a un rol de líder de equipo.\nCoach: ¿Qué resultado sería más útil lograr en este tiempo?...\n"></textarea>
       <div class="row" style="margin-top:10px">
-        <button id="runBtn">Analyze Transcript</button>
+        <button id="runBtn">Analizar transcripción</button>
         <span id="status" class="muted"></span>
       </div>
     </div>
@@ -139,8 +42,8 @@ Coach: What outcome would be most useful from our time today?...
 
     <div id="jsonWrap" class="card" style="display:none">
       <div class="row" style="justify-content:space-between">
-        <div class="h2">Raw JSON</div>
-        <button id="dl">Download JSON</button>
+        <div class="h2">JSON bruto</div>
+        <button id="dl">Descargar JSON</button>
       </div>
       <pre id="json" class="mono"></pre>
     </div>
@@ -159,40 +62,46 @@ function scorecardHTML(r){
   const row = (name,key) => `<div>${name}: ${starBar(c[key].score_1_5)} <span class="muted">(${c[key].score_1_5})</span></div>`;
 
   return `
-  <div class="h2">Scorecard</div>
+  <div class="h2">Informe</div>
   <div class="grid">
     <div>
-      <div><strong>Overall:</strong> ${r.overall_score_0_100}/100 · <strong>Confidence:</strong> ${r.overall_confidence}</div>
-      <div class="muted" style="margin-top:6px">Talk profile: ${r.metrics.est_coach_talk_ratio} coach talk · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>
-      <div class="h2">Competencies (5★)</div>
-      ${row('Ethics','ethics')}
-      ${row('Mindset','mindset')}
-      ${row('Agreements','agreements')}
-      ${row('Trust & Safety','trust_safety')}
-      ${row('Presence','presence')}
-      ${row('Active Listening','active_listening')}
-      ${row('Evokes Awareness','evokes_awareness')}
-      ${row('Facilitates Growth','facilitates_growth')}
+      <div><strong>Global:</strong> ${r.overall_score_0_100}/100 · <strong>Confianza:</strong> ${r.overall_confidence}</div>
+      <div class="muted" style="margin-top:6px">Perfil de conversación: ${r.metrics.est_coach_talk_ratio} del coach · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>
+      <div class="h2">Competencias (5★)</div>
+      ${row('Ética','ethics')}
+      ${row('Mentalidad','mindset')}
+      ${row('Acuerdos','agreements')}
+      ${row('Confianza y Seguridad','trust_safety')}
+      ${row('Presencia','presence')}
+      ${row('Escucha Activa','active_listening')}
+      ${row('Evoca Toma de Conciencia','evokes_awareness')}
+      ${row('Facilita el Crecimiento','facilitates_growth')}
     </div>
     <div>
-      <div class="h2">Top strengths</div>
-      <ul><li>${r.strengths_summary}</li></ul>
-      <div class="h2">Growth edges</div>
-      <ul><li>${r.growth_areas_summary}</li></ul>
-      <div class="h2">Action items</div>
-      <ul>${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill}</li>`).join('')}</ul>
+      <div class="h2">Fortalezas</div>
+      <ul>
+        <li>${r.strengths_summary}</li>
+      </ul>
+      <div class="h2">Áreas de mejora</div>
+      <ul>
+        <li>${r.growth_areas_summary}</li>
+      </ul>
+      <div class="h2">Acciones</div>
+      <ul>
+        ${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill}</li>`).join('')}
+      </ul>
     </div>
   </div>`;
 }
 
 el('runBtn').onclick = async () => {
   const transcript = el('txt').value.trim();
-  if(!transcript){ alert('Paste a transcript first.'); return; }
-  el('status').textContent = 'Analyzing…';
+  if(!transcript){ alert('Pega una transcripción primero.'); return; }
+  el('status').textContent = 'Analizando…';
   el('runBtn').disabled = true;
   try{
     const res = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transcript }) });
-    if(!res.ok){ const t = await res.text(); throw new Error(t || 'Server error'); }
+    if(!res.ok){ throw new Error('Server error'); }
     const data = await res.json();
     el('report').style.display = 'block';
     el('jsonWrap').style.display = 'block';
@@ -202,12 +111,12 @@ el('runBtn').onclick = async () => {
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'coachai-scorecard.json'; a.click();
+      a.href = url; a.download = 'dara-score.json'; a.click();
       URL.revokeObjectURL(url);
     };
   }catch(err){
     console.error(err);
-    alert(err.message);
+    alert('Ocurrió un error. Revisa la API key en el servidor.');
   }finally{
     el('runBtn').disabled = false;
     el('status').textContent = '';
