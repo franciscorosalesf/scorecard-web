@@ -101,6 +101,27 @@
     --input-bg:#0C1016;
   }
 </style>
+  <!-- Brand overrides -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style id="brand-override">
+  :root{
+    /* swap these for your real brand tokens when ready */
+    --bg:#0A0C10;
+    --card:#0F1218;
+    --border:#243042;
+    --text:#F2F5F9;
+    --muted:#A9B4C5;
+    --accent:#22D3EE;      /* primary brand color */
+    --input:#0C1016;
+  }
+  body{ font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important;
+        background:var(--bg)!important; color:var(--text)!important; }
+  .h1,.h2{ font-family:"Montserrat","Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important; }
+  .card{ background:var(--card)!important; border-color:var(--border)!important; }
+  textarea{ background:var(--input)!important; border-color:var(--border)!important; color:var(--text)!important; }
+  .muted{ color:var(--muted)!important; }
+  button{ background:var(--accent)!important; color:#071017!important; }
+</style>
 </head>
 <body>
   <div class="wrap">
