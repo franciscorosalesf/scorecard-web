@@ -7,7 +7,7 @@
 
   <style>
   /* Google fonts (swap if your brand uses others) */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@600;700&display=swap');
 
 /* ===== Brand tokens — change ONLY these to restyle ===== */
 :root{
@@ -20,8 +20,9 @@
 
   --brand:#1B3A6F;        /* link / accent */
   --accent:#39B75D;       /* button */
-  --font-ui:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  --font-head:'Poppins','Manrope',system-ui,sans-serif;
+  --font-ui:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;          /* body */
+  --font-head:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* headings */
+  --button-fg:#0B0D10; /* (optional) button text color; change to #fff if your accent is dark */
 }
 
 /* ===== Base ===== */
@@ -91,6 +92,34 @@ button:disabled{ opacity:.5; cursor:not-allowed }
 
 .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
 @media (max-width:760px){ .grid{ grid-template-columns:1fr } }
+    /* === Typography overrides (last wins) === */
+body{
+  font-family:var(--font-ui);
+  font-weight:300;              /* Inter Light */
+  font-size:16.5px;
+  letter-spacing:.2px;
+  line-height:1.55;
+}
+
+.h1{
+  font-family:var(--font-head);
+  font-size:30px;
+  font-weight:700;              /* Space Grotesk bold */
+  letter-spacing:.2px;
+  margin-bottom:10px;
+}
+
+.h2{
+  font-family:var(--font-head);
+  font-size:20px;
+  font-weight:600;              /* Space Grotesk semibold */
+  margin:18px 0 8px;
+}
+
+button{
+  font-weight:700;              /* keep buttons punchy */
+  color:var(--button-fg);
+}
   </style>
 </head>
 <body>
