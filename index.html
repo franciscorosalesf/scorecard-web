@@ -136,6 +136,37 @@ button{
   font-weight: 300;
   opacity: .9;                   /* optional */
 }
+    /* === Button text + states (last wins) === */
+:root{
+  /* optional: tokenize the button text color + font */
+  --button-fg:#FFF;  /* use #fff if your accent is dark */
+  --button-font:'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+button{
+  /* text */
+  font-family: var(--button-font); /* or var(--font-head) / var(--font-ui) */
+  font-weight: 700;                /* punchy: 600–700 works well */
+  font-size: 18px;
+  letter-spacing: .2px;
+  text-transform: none;            /* change to uppercase if you want */
+
+  /* visuals (already set, but safe to re-assert) */
+  color: var(--button-fg);
+  background: var(--accent);
+  padding: 14px 18px;
+  border-radius: 14px;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover{ filter: brightness(1.06); }
+button:focus-visible{ outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* If you want the Analyze button styled differently from Download: */
+#runBtn{ font-weight: 700; }       /* main CTA */
+#dl{ font-weight: 600; opacity:.95 } /* secondary CTA */
   </style>
 </head>
 <body>
