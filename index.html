@@ -81,6 +81,26 @@
   line-height: 1.5;        /* optional: nicer spacing */
   opacity: .7;             /* optional: placeholder tone */
 }
+    /* ===== Layout polish & spacing ===== */
+.wrap{ padding-top:24px; padding-bottom:40px; }
+
+/* Give the scorecard more breathing room */
+#report.card{ margin-block:24px; }
+
+/* Robust two-column grid that doesn't cascade weirdly in WordPress/Divi */
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+}
+.grid > *{ min-width:0; } /* prevents overflow pushing columns */
+
+/* Tighter, consistent lists */
+ul{ margin:8px 0 0 1.1rem; padding:0; }
+
+/* (Optional) slightly larger section headings */
+.h2{ margin:14px 0 8px; font-weight:700; font-size:18px; }
   </style>
 </head>
 <body>
