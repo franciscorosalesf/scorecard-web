@@ -127,7 +127,7 @@ function scorecardHTML(r){
     <div><strong>Global:</strong> ${r.overall_score_0_100}/100 · <strong>Confianza:</strong> ${r.overall_confidence}</div>
     ${r.metrics ? `<div class="muted" style="margin-top:6px">Perfil de conversación: ${r.metrics.est_coach_talk_ratio} coach · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>` : ''}
 
-    <div class="h2">Competencias (5★)</div>
+    <div class="h2">Competencias Core de la ICF (Escala de 5★)</div>
     <div class="grid">
       <div>
         ${row('Ética','ethics')}
