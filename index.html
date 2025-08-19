@@ -76,12 +76,17 @@
   letter-spacing:.2px;
   color:var(--btn-text); /* or hard-code a hex if you prefer */
 }
+    textarea::placeholder {
+  white-space: pre-wrap;   /* keep line breaks */
+  line-height: 1.5;        /* optional: nicer spacing */
+  opacity: .7;             /* optional: placeholder tone */
+}
   </style>
 </head>
 <body>
   <div class="app">
     <!-- Transcript box + button -->
-    <textarea id="txt" placeholder="👉 Pega aquí una transcripción con líneas Coach: / Client:\n\nEjemplo breve:\nCoach: Recordatorio rápido — esto es confidencial y tú decides qué tratamos hoy.\nClient: Estoy dudando si postularme a un rol de líder de equipo.\nCoach: ¿Qué resultado sería más útil lograr hoy?\n\nSugerencias:\n• Al menos 5–10 intercambios\n• Español o inglés\n• Evita nombres reales"></textarea>
+    <textarea id="txt" placeholder="👉 Pega aquí una transcripción con líneas Coach: / Client:&#10;&#10;Ejemplo breve:&#10;Coach: Recordatorio rápido — esto es confidencial y tú decides qué tratamos hoy.&#10;Client: Estoy dudando si postularme a un rol de líder de equipo.&#10;Coach: ¿Qué resultado sería más útil lograr hoy?"></textarea>
 
     <div class="row">
       <button id="runBtn">Analizar transcripción</button>
