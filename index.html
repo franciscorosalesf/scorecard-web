@@ -5,199 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dara Coaching Score</title>
 
+  <!-- Fonts (headings = Space Grotesk, body = Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
-  /* Google fonts (swap if your brand uses others) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@600;700&display=swap');
+    /* Brand tokens — tweak these and you’re done */
+    :root{
+      --ink:#0B0D10;           /* main text */
+      --muted:#7a8699;         /* secondary text */
+      --border:#dcdfe5;        /* borders */
+      --bg:transparent;        /* page background (transparent for Divi) */
+      --field-bg:#ffffff;      /* textarea bg */
+      --btn:#1B3A6F;           /* button bg */
+      --btn-text:#ffffff;      /* button text */
+      --radius:14px;
+    }
 
-/* ===== Brand tokens — change ONLY these to restyle ===== */
-:root{
-  --ink:#EEF6F3;          /* page background */
-  --text:#203742;         /* main text */
-  --muted:#9AA3B2;        /* secondary text */
-  --card:#FDF9F4;         /* card background */
-  --border:#FDF9F4;       /* borders */
-  --input-bg:#FFFFFF;     /* textarea & code bg */
+    /* Base */
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+    .app{max-width:1080px;margin:0 auto;padding:16px}
 
-  --brand:#1B3A6F;        /* link / accent */
-  --accent:#39B75D;       /* button */
-  --font-ui:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;          /* body */
-  --font-head:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* headings */
-  --button-fg:#FFFFFF; /* (optional) button text color; change to #fff if your accent is dark */
-}
+    /* Input area */
+    textarea{
+      width:100%;
+      min-height:280px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      background:var(--field-bg);
+      color:var(--ink);
+      padding:14px 16px;
+      font-size:16px;
+      resize:vertical;
+    }
 
-/* ===== Base ===== */
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{
-  font-family:var(--font-ui);
-  color:var(--text);
-  background:var(--ink);
-  line-height:1.5;
-  letter-spacing:.2px;
-}
-a{ color:var(--brand); text-decoration:none }
-a:hover{ text-decoration:underline }
+    /* Controls */
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    button{
+      border:0;
+      background:var(--btn);
+      color:var(--btn-text);
+      padding:12px 18px;
+      border-radius:var(--radius);
+      font-weight:600;
+      cursor:pointer;
+    }
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 
-.wrap{ max-width:940px; margin:0 auto; padding:24px }
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
-}
-.row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+    /* Results */
+    #report{margin-top:22px}
+    .h2{font-family:"Space Grotesk",Inter,sans-serif;font-size:20px;font-weight:700;margin:14px 0 8px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+    .bar{display:inline-block;margin-left:8px}
+    pre{
+      white-space:pre-wrap;word-break:break-word;
+      background:var(--field-bg);border:1px solid var(--border);
+      border-radius:var(--radius);padding:12px;margin-top:10px
+    }
 
-.h1{
-  font-family:var(--font-head);
-  font-size:28px; font-weight:800; margin:0 0 8px;
-  letter-spacing:.2px;
-}
-.h2{
-  font-family:var(--font-head);
-  font-size:20px; font-weight:700; margin:16px 0 8px;
-}
-
-.muted{ color:var(--muted) }
-.mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace }
-
-textarea{
-  width:100%; min-height:260px;
-  border-radius:12px; padding:12px;
-  border:1px solid var(--border);
-  background:var(--input-bg);
-  color:var(--text);
-}
-textarea:focus{ outline:2px solid var(--brand); outline-offset:2px }
-
-pre{
-  white-space:pre-wrap; word-break:break-word;
-  background:var(--input-bg);
-  border:1px solid var(--border);
-  border-radius:12px; padding:12px;
-}
-
-button{
-  border:none; cursor:pointer;
-  padding:12px 16px; border-radius:12px;
-  font-weight:700;
-  background:var(--accent);
-  color:#0B0D10; /* choose #fff if you prefer */
-}
-button:hover{ filter:brightness(1.06) }
-button:disabled{ opacity:.5; cursor:not-allowed }
-
-.bar{ display:inline-block; margin-left:8px }
-.pill{ display:inline-block; border:1px solid var(--border); border-radius:999px; padding:4px 10px; margin-right:6px }
-
-.grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
-@media (max-width:760px){ .grid{ grid-template-columns:1fr } }
-    /* === Typography overrides (last wins) === */
-body{
-  font-family:var(--font-ui);
-  font-weight:300;              /* Inter Light */
-  font-size:16.5px;
-  letter-spacing:.2px;
-  line-height:1.55;
-}
-
-.h1{
-  font-family:var(--font-head);
-  font-size:30px;
-  font-weight:700;              /* Space Grotesk bold */
-  letter-spacing:.2px;
-  margin-bottom:10px;
-}
-
-.h2{
-  font-family:var(--font-head);
-  font-size:20px;
-  font-weight:600;              /* Space Grotesk semibold */
-  margin:18px 0 8px;
-}
-
-button{
-  font-weight:700;              /* keep buttons punchy */
-  color:var(--button-fg);
-}
-    /* Transcript input (textarea) */
-#txt{
-  font-family: var(--font-ui);   /* or 'Inter', sans-serif */
-  font-weight: 300;              /* Inter Light */
-  font-size: 18px;               /* tweak to taste */
-  line-height: 1.55;
-  letter-spacing: .2px;
-  min-height: 300px;             /* optional: taller box */
-}
-
-/* Placeholder inside the textarea */
-#txt::placeholder{
-  color: var(--muted);
-  font-weight: 300;
-  opacity: .9;                   /* optional */
-}
-    /* === Button text + states (last wins) === */
-:root{
-  /* optional: tokenize the button text color + font */
-  --button-fg:#FFF;  /* use #fff if your accent is dark */
-  --button-font:'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-}
-
-button{
-  /* text */
-  font-family: var(--button-font); /* or var(--font-head) / var(--font-ui) */
-  font-weight: 700;                /* punchy: 600–700 works well */
-  font-size: 18px;
-  letter-spacing: .2px;
-  text-transform: none;            /* change to uppercase if you want */
-
-  /* visuals (already set, but safe to re-assert) */
-  color: var(--button-fg);
-  background: var(--accent);
-  padding: 14px 18px;
-  border-radius: 14px;
-  line-height: 1;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover{ filter: brightness(1.06); }
-button:focus-visible{ outline: 2px solid var(--brand); outline-offset: 2px; }
-
-/* If you want the Analyze button styled differently from Download: */
-#runBtn{ font-weight: 700; }       /* main CTA */
-#dl{ font-weight: 600; opacity:.95 } /* secondary CTA */
+    /* Optional: JSON block */
+    #jsonWrap{margin-top:16px}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card" style="margin-bottom:12px">
-      <div class="h1">Dara Coaching Score</div>
-      <div class="muted">Pega una transcripción con líneas <span class="mono">Coach:</span> / <span class="mono">Client:</span>. Sin audio por ahora. Español o inglés.</div>
+  <div class="app">
+    <!-- Transcript box + button -->
+    <textarea id="txt" placeholder="👉 Pega aquí una transcripción con líneas Coach: / Client:\n\nEjemplo breve:\nCoach: Recordatorio rápido — esto es confidencial y tú decides qué tratamos hoy.\nClient: Estoy dudando si postularme a un rol de líder de equipo.\nCoach: ¿Qué resultado sería más útil lograr hoy?\n\nSugerencias:\n• Al menos 5–10 intercambios\n• Español o inglés\n• Evita nombres reales"></textarea>
+
+    <div class="row">
+      <button id="runBtn">Analizar transcripción</button>
+      <span id="status" class="muted"></span>
     </div>
 
-    <div class="card" style="margin-bottom:12px">
-      <textarea id="txt" placeholder="👉 Pega aquí una transcripción con líneas Coach: / Client:
-Ejemplo breve:
-Coach: Recordatorio rápido — esto es confidencial y tú decides qué tratamos hoy.
-Client: Estoy dudando si postularme a un rol de líder de equipo.
-Coach: ¿Qué resultado sería más útil lograr hoy?
+    <!-- Results (Scorecard) -->
+    <div id="report" style="display:none"></div>
 
-Sugerencias:
-• Al menos 5–10 intercambios
-• Español o inglés
-• Evita nombres reales" ></textarea>
-      <div class="row" style="margin-top:10px">
-        <button id="runBtn">Analizar transcripción</button>
-        <span id="status" class="muted"></span>
-      </div>
-    </div>
-
-    <div id="report" class="card" style="display:none;margin-bottom:12px"></div>
-
-    <div id="jsonWrap" class="card" style="display:none">
+    <!-- Optional: JSON download -->
+    <div id="jsonWrap" style="display:none">
       <div class="row" style="justify-content:space-between">
-        <div class="h2">JSON bruto</div>
+        <div class="h2">JSON</div>
         <button id="dl">Descargar JSON</button>
       </div>
       <pre id="json" class="mono"></pre>
@@ -205,6 +95,7 @@ Sugerencias:
   </div>
 
 <script>
+/* Small helpers */
 const el = (id) => document.getElementById(id);
 const starBar = (n) => {
   const filled = '▰'.repeat(n);
@@ -212,66 +103,70 @@ const starBar = (n) => {
   return `<span class="bar mono">${filled}${empty}</span>`;
 };
 
+/* Scorecard HTML (kept minimal) */
 function scorecardHTML(r){
-  const c = r.competencies;
-  const row = (name,key) => `<div>${name}: ${starBar(c[key].score_1_5)} <span class="muted">(${c[key].score_1_5})</span></div>`;
+  const c = r.competencies || {};
+  const row = (name,key) => c[key]
+    ? `<div>${name}: ${starBar(c[key].score_1_5||0)} <span class="muted">(${c[key].score_1_5||0})</span></div>`
+    : '';
 
   return `
-  <div class="h2">Informe</div>
-  <div class="grid">
-    <div>
-      <div><strong>Global:</strong> ${r.overall_score_0_100}/100 · <strong>Confianza:</strong> ${r.overall_confidence}</div>
-      <div class="muted" style="margin-top:6px">Perfil de conversación: ${r.metrics.est_coach_talk_ratio} del coach · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>
-      <div class="h2">Competencias (5★)</div>
-      ${row('Ética','ethics')}
-      ${row('Mentalidad','mindset')}
-      ${row('Acuerdos','agreements')}
-      ${row('Confianza y Seguridad','trust_safety')}
-      ${row('Presencia','presence')}
-      ${row('Escucha Activa','active_listening')}
-      ${row('Evoca Toma de Conciencia','evokes_awareness')}
-      ${row('Facilita el Crecimiento','facilitates_growth')}
-    </div>
-    <div>
-      <div class="h2">Fortalezas</div>
-      <ul>
-        <li>${r.strengths_summary}</li>
-      </ul>
-      <div class="h2">Áreas de mejora</div>
-      <ul>
-        <li>${r.growth_areas_summary}</li>
-      </ul>
-      <div class="h2">Acciones</div>
-      <ul>
-        ${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill}</li>`).join('')}
-      </ul>
-    </div>
-  </div>`;
+    <div class="h2">Informe</div>
+    <div><strong>Global:</strong> ${r.overall_score_0_100}/100 · <strong>Confianza:</strong> ${r.overall_confidence}</div>
+    ${r.metrics ? `<div class="muted" style="margin-top:6px">Perfil de conversación: ${r.metrics.est_coach_talk_ratio} coach · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>` : ''}
+
+    <div class="h2">Competencias (5★)</div>
+    <div class="grid">
+      <div>
+        ${row('Ética','ethics')}
+        ${row('Mentalidad','mindset')}
+        ${row('Acuerdos','agreements')}
+        ${row('Confianza y Seguridad','trust_safety')}
+        ${row('Presencia','presence')}
+        ${row('Escucha Activa','active_listening')}
+        ${row('Evoca Toma de Conciencia','evokes_awareness')}
+        ${row('Facilita el Crecimiento','facilitates_growth')}
+      </div>
+      <div>
+        ${r.strengths_summary ? `<div class="h2">Fortalezas</div><ul><li>${r.strengths_summary}</li></ul>` : ''}
+        ${r.growth_areas_summary ? `<div class="h2">Áreas de mejora</div><ul><li>${r.growth_areas_summary}</li></ul>` : ''}
+        ${(r.action_items||[]).length ? `<div class="h2">Acciones</div><ul>${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill||a.why_it_matters||''}</li>`).join('')}</ul>` : ''}
+      </div>
+    </div>`;
 }
 
+/* Click handler */
 el('runBtn').onclick = async () => {
   const transcript = el('txt').value.trim();
   if(!transcript){ alert('Pega una transcripción primero.'); return; }
   el('status').textContent = 'Analizando…';
   el('runBtn').disabled = true;
+
   try{
-    const res = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transcript }) });
+    const res = await fetch('/api/analyze', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ transcript })
+    });
     if(!res.ok){ throw new Error('Server error'); }
+
     const data = await res.json();
     el('report').style.display = 'block';
-    el('jsonWrap').style.display = 'block';
     el('report').innerHTML = scorecardHTML(data);
+
+    // Optional JSON
+    el('jsonWrap').style.display = 'block';
     el('json').textContent = JSON.stringify(data, null, 2);
     el('dl').onclick = () => {
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'dara-score.json'; a.click();
+      a.href = url; a.download = 'dara-coaching-score.json'; a.click();
       URL.revokeObjectURL(url);
     };
   }catch(err){
     console.error(err);
-    alert('Ocurrió un error. Revisa la API key en el servidor.');
+    alert('Algo falló. Revisa tu API key en el servidor.');
   }finally{
     el('runBtn').disabled = false;
     el('status').textContent = '';
