@@ -127,29 +127,75 @@ ul{ margin:8px 0 0 1.1rem; padding:0; }
   </div>
 
 <script>
-/* Small helpers */
-const el = (id) => document.getElementById(id);
-const starBar = (n) => {
+/* ========= helpers ========= */
+const el = (id)=>document.getElementById(id);
+
+const esConfidence = (c)=>{
+  const v = String(c||'').toLowerCase();
+  if (v.startsWith('h')) return 'Alta';
+  if (v.startsWith('l')) return 'Baja';
+  return 'Media';
+};
+
+/* Parse "70%", "45:55", or "78% ... / 22% ..." into two percents */
+function parseTwoValues(str){
+  if (!str) return null;
+  const s = String(str);
+
+  // "12:8"
+  let m = s.match(/(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)/);
+  if (m){
+    const a = Number(m[1]), b = Number(m[2]);
+    const total = (a+b) || 1;
+    const p1 = Math.round((a/total)*100);
+    return { p1, p2: 100 - p1 };
+  }
+
+  // "78% ... / 22% ..."
+  m = s.match(/(\d+(?:\.\d+)?)\s*%.*?(\d+(?:\.\d+)?)\s*%/);
+  if (m) return { p1: Math.round(Number(m[1])), p2: Math.round(Number(m[2])) };
+
+  // "70%"
+  m = s.match(/(\d+(?:\.\d+)?)\s*%/);
+  if (m){
+    const p1 = Math.round(Number(m[1]));
+    return { p1, p2: 100 - p1 };
+  }
+
+  return null;
+}
+
+const starBar = (n)=>{
   const filled = '▰'.repeat(n);
-  const empty = '▱'.repeat(5-n);
+  const empty  = '▱'.repeat(5-n);
   return `<span class="bar mono">${filled}${empty}</span>`;
 };
 
-/* Scorecard HTML (kept minimal) */
+/* ========= renderer ========= */
 function scorecardHTML(r){
   const c = r.competencies || {};
-  const row = (name,key) => c[key]
-    ? `<div>${name}: ${starBar(c[key].score_1_5||0)} <span class="muted">(${c[key].score_1_5||0})</span></div>`
-    : '';
+  const row = (name,key)=>`
+    <div>${name}: ${starBar(c[key]?.score_1_5 ?? 0)} <span class="muted">(${c[key]?.score_1_5 ?? '—'})</span></div>
+  `;
+
+  // Talk Profile (Spanish line)
+  const coach = parseTwoValues(r.metrics?.est_coach_talk_ratio) || { p1:'—', p2:'—' };
+  const qs    = parseTwoValues(r.metrics?.question_vs_statement_ratio) || { p1:'—', p2:'—' };
+  const oq    = parseTwoValues(r.metrics?.open_vs_closed_questions)    || { p1:'—', p2:'—' };
+
+  const talkLine = `Perfil de conversación: Coach ${coach.p1}% / Cliente ${coach.p2}% - ${qs.p1}% Preguntas / ${qs.p2}% Declaraciones - ${oq.p1}% Preguntas abiertas / ${oq.p2}% cerradas`;
 
   return `
     <div class="h2">Informe</div>
-    <div><strong>Global:</strong> ${r.overall_score_0_100}/100 · <strong>Confianza:</strong> ${r.overall_confidence}</div>
-    ${r.metrics ? `<div class="muted" style="margin-top:6px">Perfil de conversación: ${r.metrics.est_coach_talk_ratio} coach · ${r.metrics.question_vs_statement_ratio} · ${r.metrics.open_vs_closed_questions}</div>` : ''}
-
-    <div class="h2">Competencias Core de la ICF (Escala de 5★)</div>
     <div class="grid">
       <div>
+        <div>
+          <span class="pill"><strong>Global:</strong> ${r.overall_score_0_100}/100</span>
+          <span class="pill"><strong>Confianza:</strong> ${esConfidence(r.overall_confidence)}</span>
+        </div>
+        <div class="muted" style="margin-top:8px">${talkLine}</div>
+
+        <div class="h2">Competencias (5★)</div>
         ${row('Ética','ethics')}
         ${row('Mentalidad','mindset')}
         ${row('Acuerdos','agreements')}
@@ -159,15 +205,24 @@ function scorecardHTML(r){
         ${row('Evoca Toma de Conciencia','evokes_awareness')}
         ${row('Facilita el Crecimiento','facilitates_growth')}
       </div>
+
       <div>
-        ${r.strengths_summary ? `<div class="h2">Fortalezas</div><ul><li>${r.strengths_summary}</li></ul>` : ''}
-        ${r.growth_areas_summary ? `<div class="h2">Áreas de mejora</div><ul><li>${r.growth_areas_summary}</li></ul>` : ''}
-        ${(r.action_items||[]).length ? `<div class="h2">Acciones</div><ul>${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill||a.why_it_matters||''}</li>`).join('')}</ul>` : ''}
+        <div class="h2">Fortalezas</div>
+        <ul><li>${r.strengths_summary || '—'}</li></ul>
+
+        <div class="h2">Áreas de mejora</div>
+        <ul><li>${r.growth_areas_summary || '—'}</li></ul>
+
+        <div class="h2">Acciones</div>
+        <ul>
+          ${(r.action_items||[]).slice(0,3).map(a=>`<li><strong>${a.title}</strong> — ${a.practice_drill}</li>`).join('')}
+        </ul>
       </div>
-    </div>`;
+    </div>
+  `;
 }
 
-/* Click handler */
+/* ========= behavior ========= */
 el('runBtn').onclick = async () => {
   const transcript = el('txt').value.trim();
   if(!transcript){ alert('Pega una transcripción primero.'); return; }
@@ -183,22 +238,23 @@ el('runBtn').onclick = async () => {
     if(!res.ok){ throw new Error('Server error'); }
 
     const data = await res.json();
-    el('report').style.display = 'block';
-    el('report').innerHTML = scorecardHTML(data);
 
-    // Optional JSON
+    el('report').style.display = 'block';
     el('jsonWrap').style.display = 'block';
+    el('report').innerHTML = scorecardHTML(data);
     el('json').textContent = JSON.stringify(data, null, 2);
+
     el('dl').onclick = () => {
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'dara-coaching-score.json'; a.click();
+      a.href = url; a.download = 'evaluacion-coaching-ia.json'; a.click();
       URL.revokeObjectURL(url);
     };
+
   }catch(err){
     console.error(err);
-    alert('Algo falló. Revisa tu API key en el servidor.');
+    alert('Ocurrió un error. Revisa tu API key en el servidor.');
   }finally{
     el('runBtn').disabled = false;
     el('status').textContent = '';
